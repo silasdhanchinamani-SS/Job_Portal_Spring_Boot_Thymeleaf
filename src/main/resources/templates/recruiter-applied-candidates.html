@@ -218,10 +218,10 @@
           <h3 class="candidate-name" th:text="${applier.name}">
             Candidate Name
           </h3>
-          <p class="candidate-skills" th:text="${applier.education.degree}">
+          <p class="candidate-skills" th:text="${applier.education != null ? applier.education.degree : 'No Education Details'}">
             Education
           </p>
-          <p class="candidate-skills" th:text="${applier.experience.position}+' '+${applier.experience.company}">
+          <p class="candidate-skills" th:text="${applier.experience != null ? (applier.experience.position + ' ' + applier.experience.company) : 'No Experience Details'}">
             Experience
           </p>
           <a th:href="${applier.resumeUrl}" class="download-btn">
@@ -229,9 +229,9 @@
           </a>
           <p class="candidate-skills" style="margin-top: 1rem">
             Status:
-            <span th:text="${applier.getApplication(job).status}"></span>
+            <span th:text="${applier.getStatus(job) != null ? applier.getStatus(job).status : 'PENDING'}"></span>
           </p>
-          <form th:action="'/recruiter/update-status/'+${applier.getApplication(job).id}" method="post">
+          <form th:action="'/recruiter/update-status/'+${applier.getStatus(job) != null ? applier.getStatus(job).id : 0}" method="post">
             <select class="download-btn" name="status" style="
                   margin-top: 1rem;
                   cursor: pointer;
